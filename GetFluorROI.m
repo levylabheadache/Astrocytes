@@ -31,8 +31,8 @@ if ~exist(savePath,'file') || overwrite
     Froi = repmat( struct('cell',[], 'soma',[], 'proc',[]), expt.Nruns, Nz);
     for z = 1:Nz
         % Load concatenated green-channel projection
-        if expt.Nruns > 1 && ~isempty(projParam.path.cat.reg.z{1,2,z})
-            greenCatPath = projParam.path.cat.reg.z{1,2,z};
+        if expt.Nruns > 1 && ~isempty(projParam.path.cat.reg.z{2,1,z}) %{1,2,z}
+            greenCatPath = projParam.path.cat.reg.z{2,1,z}; %{1,2,z}
         elseif expt.Nruns == 1 && ~isempty(projParam.path.run.reg.z{1,2,z})
             greenCatPath = projParam.path.run.reg.z{1,2,z};
         else
