@@ -44,7 +44,7 @@ for z = 1:projParam.Nz
 
     % Preprocess the concatenated data
     if expt.Nruns > 1
-        [catProjDir, catProjNames, catProjExt] = fileparts(projParam.path.cat.reg.z{1,2,z});
+        [catProjDir, catProjNames, catProjExt] = fileparts(projParam.path.cat.reg.z{2,1,z}); %{1,2,z}
     else
         [catProjDir, catProjNames, catProjExt] = fileparts(projParam.path.run.reg.z{1,2,z});
     end
