@@ -33,8 +33,8 @@ if ~exist(savePath,'file') || overwrite
         % Load concatenated green-channel projection
         if expt.Nruns > 1 && ~isempty(projParam.path.cat.reg.z{2,1,z}) %{1,2,z}
             greenCatPath = projParam.path.cat.reg.z{2,1,z}; %{1,2,z}
-        elseif expt.Nruns == 1 && ~isempty(projParam.path.run.reg.z{1,2,z})
-            greenCatPath = projParam.path.run.reg.z{1,2,z};
+        elseif expt.Nruns == 1 && ~isempty(projParam.path.run.raw.z{1,2,z}) %projParam.path.run.reg.z{1,2,z})
+            greenCatPath = projParam.path.run.raw.z{1,2,z};
         else
             error('Registered projection does not exist!')
         end
@@ -114,7 +114,7 @@ end
 if show
     for z = 1:Nz
         cellColor = distinguishable_colors(Ncell(z));
-        figure('WindowState','max')
+        fluorescence = figure('WindowState','max');
         for runs = 1:expt.Nruns
             plot( Trel{runs}, Fback{runs,z}, 'k'); hold on;
             for c = 1:Ncell(z)
@@ -130,6 +130,13 @@ if show
         %}
         xlim([-Inf,Inf]);
         xlabel('Time (min)'); ylabel('Raw Fluorescence');
+
+        % save the figure
+        figPath = sprintf('%s%s_RawFluorescence', expt.dir, expt.name);
+        if ~exist(figPath, 'file') || overwrite
+            fprintf('\nSaving %s', figPath);
+            saveas(fluorescence, figPath)
+        end
         pause;
     end
 end

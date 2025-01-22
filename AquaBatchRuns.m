@@ -46,7 +46,7 @@ for z = 1:projParam.Nz
     if expt.Nruns > 1
         [catProjDir, catProjNames, catProjExt] = fileparts(projParam.path.cat.reg.z{2,1,z}); %{1,2,z}
     else
-        [catProjDir, catProjNames, catProjExt] = fileparts(projParam.path.run.reg.z{1,2,z});
+        [catProjDir, catProjNames, catProjExt] = fileparts(projParam.path.run.raw.z{1,2,z}); %raw.z
     end
     [catDatOrg,opts] = burst.prep1(catProjDir,[catProjNames,catProjExt],[],opts);  % read data    {1}
     % Run AQuA on each run separately, but using the same preprocessed data and opts generated above 
@@ -56,7 +56,7 @@ for z = 1:projParam.Nz
         fprintf('\nApplying AQuA to %s: ', runName)
         runResultPath = sprintf('%s%s_AQuA.mat', outputDir, runName);
         if ~exist(runResultPath, 'file')
-            tic;
+            %tic;
             % Get the run-level data from the preprocessed, concatenated version
             runDatOrg = catDatOrg(:,:,projParam.binLims(runs)+1:projParam.binLims(runs+1));
             runOpts = opts;
@@ -295,7 +295,7 @@ for z = 1:projParam.Nz
             res.bd{z} = bd{z};
             fprintf('Writing %s', runResultPath)
             save(runResultPath, 'res'); % path0 -> outputDir
-            toc
+            %toc
         else
             fprintf('Already done')
         end
